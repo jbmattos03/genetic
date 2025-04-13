@@ -5,8 +5,7 @@ This module defines the Chromosome class, which represents a solution in the gen
 from gene import Gene
 
 class Chromosome:
-    def __init__(self, values: list[Gene], range_values: list[int] = None):
+    def __init__(self, values: list[Gene], length: int):
         self.values = values
-        self.length = len(values)
-        self.range_values = [] # The values each gene can take
+        self.length = length
         self.fitness = 0
