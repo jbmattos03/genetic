@@ -69,7 +69,7 @@ class GeneticAlgorithm:
         if self.best is None or self.best.fitness < max([chromosome.fitness for chromosome in self.population.chromosomes]):
             self.best = max(self.population.chromosomes, key=lambda x: x.fitness)
 
-    def select_parents(self, parents: int) -> list[Chromosome]:
+    def roulette(self, parents: int) -> list[Chromosome]:
         """
         Selects parents for crossover using roulette selection.
         :return: A list of selected parents.
@@ -83,15 +83,12 @@ class GeneticAlgorithm:
         while current_pop != [] and len(selected) < parents:
             selected_flag = False
             random_number = random.randint(0, total_fitness)
-            print(f"Random number: {random_number}, Total fitness: {total_fitness}")
             
             for chromosome in current_pop:
                 current_sum += chromosome.fitness
-                print(f"Current sum: {current_sum}, Chromosome fitness: {chromosome.fitness}")
 
                 if random_number < current_sum:
                     selected_flag = True
-                    print(f"Selected chromosome: {chromosome.fitness}")
                     selected.append(chromosome)
                     break
             
@@ -116,10 +113,10 @@ class GeneticAlgorithm:
         :return: A tuple containing the two offspring chromosomes.
         """
         index = random.randint(1, parent1.length - 1)
-        print(f"Crossover index: {index}")
-    
-        offspring1 = Chromosome(parent1.values[:index] + parent2.values[index:], chromosome_length)
-        offspring2 = Chromosome(parent2.values[:index] + parent1.values[index:], chromosome_length)
+        print("Index:", index)
+
+        offspring1 = Chromosome(parent2.values[:index] + parent1.values[index:], chromosome_length)
+        offspring2 = Chromosome(parent1.values[:index] + parent2.values[index:], chromosome_length)
         
         parent1.values = offspring1.values
         parent2.values = offspring2.values
