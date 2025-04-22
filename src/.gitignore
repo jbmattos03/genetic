@@ -1,1 +1,11 @@
+# Ignore testes folder
 testes
+
+# Ignore tests.py
+tests.py
+
+# Ignore __pycache__ folder
+__pycache__
+
+# Ignore all .pyc files
+*.pyc
