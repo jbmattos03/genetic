@@ -112,21 +112,22 @@ class GeneticAlgorithm:
             attempts_counter -= 1
 
             # Randomly select crossover points
-            i = random.randint(1, parent1.length - 1)
-            j = random.randint(1, parent2.length - 1)
+            i = random.randint(0, parent1.length - 1)
+            j = random.randint(0, parent2.length - 1)
 
-            if i > j:
-                offspring1 = Chromosome([Gene(g.value) for g in (parent2.values[:i] + parent1.values[i:])], chromosome_length)
-                offspring2 = Chromosome([Gene(g.value) for g in (parent1.values[:i] + parent2.values[i:])], chromosome_length)
-            elif j > i:
-                offspring1 = Chromosome([Gene(g.value) for g in (parent1.values[:j] + parent2.values[j:])], chromosome_length)
-                offspring2 = Chromosome([Gene(g.value) for g in (parent2.values[:j] + parent1.values[j:])], chromosome_length)
+            if i != j:
+                max_index = max(i, j)
+                min_index = min(i, j)
+
+                offspring1 = Chromosome(values=parent1.values[:], length=chromosome_length)
+                offspring1.values[min_index:max_index] = parent2.values[min_index:max_index][:]
+
+                offspring2 = Chromosome(values=parent2.values[:], length=chromosome_length)
+                offspring2.values[min_index:max_index] = parent1.values[min_index:max_index][:]
             else:
-                offspring1 = Chromosome([Gene(g.value) for g in parent1.values], chromosome_length)
-                offspring1.values[i] = parent2.values[i]
+                offspring1 = Chromosome(values=parent2.values[:i]+parent1.values[i:], length=chromosome_length)
+                offspring2 = Chromosome(values=parent1.values[:i]+parent2.values[i:], length=chromosome_length)
 
-                offspring2 = Chromosome([Gene(g.value) for g in parent2.values], chromosome_length)
-                offspring2.values[j] = parent1.values[j]
 
             # Check if the offspring are valid (i.e., their weight does not exceed the max sum)
             # and if they are not already in the population
