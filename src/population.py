@@ -7,3 +7,4 @@ from chromosome import Chromosome
 class Population:
     def __init__(self, chromosomes: list[Chromosome]):
         self.chromosomes = chromosomes
+        self.size = len(chromosomes)
