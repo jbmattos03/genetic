@@ -36,8 +36,8 @@ class GeneticAlgorithm:
             success_flag = False
 
             while success_flag is False:
-                for _ in range(chromosome_length):
-                    gene = Gene(random.randint(0,1)) # Randomly generate a gene (0 or 1)
+                for i in range(chromosome_length):
+                    gene = Gene(value=random.randint(0, self.fitness_function.qty_values[i]))
                     chromosome.values.append(gene)
                 
                 if chromosome not in population and sum([chromosome.values[i].value * weight_values[i] for i in range(chromosome_length)]) <= max_sum:
@@ -152,7 +152,7 @@ class GeneticAlgorithm:
         for i, g in enumerate(chromosome.values):
             if random.random() <= self.mutation_rate:
                 original_value = g.value
-                new_value = random.randint(0, 1)
+                new_value = random.randint(0, self.fitness_function.qty_values[i])
 
                 if new_value != g.value:
                     g.value = new_value
